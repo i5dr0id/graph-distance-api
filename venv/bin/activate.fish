@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/i5dr0id/Documents/project/graph-distance/venv"
+set -gx VIRTUAL_ENV "/home/i5dr0id/Documents/project/graph-distance/graph-distance-api/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

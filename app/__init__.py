@@ -3,7 +3,7 @@ from flask import Flask
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import os
-import numpy as np
+# import numpy as np
 import Levenshtein
 import time
 import sys
@@ -178,10 +178,10 @@ def get_tasks():
 
 @app.route('/graph-distance/api/v1.0/graph', methods=['POST'])
 def create_task():
-	print '###############'
+	# print '###############'
 	graph = request.json['sourceobj']
 	nodes = request.json['nodes']
-	print "NODES: ", nodes
+	# print "NODES: ", nodes
 	edges = generate_edges(graph)
 	isolated = find_isolated_nodes(graph)
 	vertices = get_vertices(graph)
@@ -191,13 +191,13 @@ def create_task():
 	density = get_density(graph)
 	diameter = get_diameter(graph)
 	print({'graph': graph, 'edges': edges, 'isolated': isolated, 'vertices': vertices, 'degree_sequence': degree_sequence, 'min_degree': min_degree, 'max_degree': max_degree, 'density': density, 'diameter':diameter,'nodes':nodes})
-	print '###############'
+	# print '###############'
 	return jsonify({'graph': graph, 'edges': edges, 'isolated': isolated, 'vertices': vertices, 'degree_sequence': degree_sequence, 'min_degree': min_degree, 'max_degree': max_degree,'density': density, 'diameter':diameter,'nodes':nodes}), 201
 
 
 @app.route('/graph-distance/api/v1.0/calculate_graphs_score', methods=['POST'])
 def similarity_score():
-	print "****************************"
+	# print "****************************"
 	sourcegraph = request.json['sourcegraph']
 	sourcenode = request.json['sourcenode']
 	matchgraph = request.json['matchgraph']
@@ -220,13 +220,13 @@ def similarity_score():
 			sourceedge_filtered_new.remove(se)
 		else:
 			continue
-	print '*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*'
+	# print '*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*'
 	if (len(sourceedge_filtered) == 0 and len(matchedge_filtered) == 0):
 		SEDStopTimer = time.time()
 		SEDtotalTimer = SEDStartTimer - SEDStopTimer
-		print "TIME1: ", SEDtotalTimer
-		print "result: 1"
-		print "TIME1: ", '{0:.{1}f}'.format(SEDtotalTimer, roundFigure)
+		# print "TIME1: ", SEDtotalTimer
+		# print "result: 1"
+		# print "TIME1: ", '{0:.{1}f}'.format(SEDtotalTimer, roundFigure)
 		return jsonify({'result': 1, 'sedtime': '{0:.{1}f}'.format(SEDtotalTimer, roundFigure)}), 201
 	else:
 		asd = []
@@ -236,24 +236,24 @@ def similarity_score():
 			mct += medg
 		for sedg in sourceedge_filtered:
 			scu += sedg
-		print "SOURCE: ", scu, "MATCH: ", mct
+		# print "SOURCE: ", scu, "MATCH: ", mct
 		score = Levenshtein.ratio(scu, mct)
-		print "sourceedge_filtered_new: ", sourceedge_filtered_new
+		# print "sourceedge_filtered_new: ", sourceedge_filtered_new
 		sfns = ''
 		for sou in sourceedge_filtered_new:
 			sfns += sou
 		mfns = ''
 		for mtc in matchedge_filtered_new:
 			mfns += mtc
-		print "matchedge_filtered_new: ", matchedge_filtered_new
+		# print "matchedge_filtered_new: ", matchedge_filtered_new
 		# temp = Levenshtein.ratio(sfns, mfns)
 		temp = Levenshtein.ratio('', '')
-		print "sfns: ", sfns
-		print "mfns: ", mfns
-		print "SCORE: ", score
-		print "temp: ", temp
+		# print "sfns: ", sfns
+		# print "mfns: ", mfns
+		# print "SCORE: ", score
+		# print "temp: ", temp
 		SEDStopTimer = time.time()
 		SEDtotalTimer = SEDStartTimer - SEDStopTimer
-		print "TIME2: ", SEDtotalTimer
+		# print "TIME2: ", SEDtotalTimer
 		return jsonify({'sedtime': SEDtotalTimer, 'score':score, 'diff': ''}), 201
-	print '*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*'
+	# print '*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*'
