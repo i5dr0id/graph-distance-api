@@ -238,4 +238,5 @@ def similarity_score():
 		temp = Levenshtein.ratio('', '')
 		SEDStopTimer = time.time()
 		SEDtotalTimer = SEDStartTimer - SEDStopTimer
-		return jsonify({'sedtime': SEDtotalTimer, 'score':score, 'diff': ''}), 201
+		percentage_score = int(score)/1 * 100
+		return jsonify({'sedtime': SEDtotalTimer, 'score':score, 'diff': '', 'percentage_score': percentage_score}), 201
